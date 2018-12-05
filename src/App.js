@@ -1,36 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
-
 import Posts from './components/Posts';
 import PostForm from './components/Postform';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts:[]
-    }
-  }
-
-  componentWillMount(){
-    fetch('http://jsonplaceholder.typicode.com/posts')
-      .then(res => res.json())
-      .then(data => this.setState({posts:data}));
-  }
-
+class App extends Component { 
   render() {
-    const postItems = this.state.posts.map(post => (
-      <div key={post.id}>
-        <h3>{post.title}</h3>
-        <p>{post.body}</p>
-      </div>
-
-    ))
     return (
       <div className="App">
-      <PostForm/>
-        <h1><Posts/></h1>
-        {postItems}
+        <PostForm/>
+        <hr/>
+        <Posts/>
       </div>
     );
   }
