@@ -1,25 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import Posts from './components/Posts';
+import PostForm from './components/Postform';
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts:[]
+    }
+  }
+
+  componentWillMount(){
+    fetch('http://jsonplaceholder.typicode.com/posts')
+      .then(res => res.json())
+      .then(data => this.setState({posts:data}));
+  }
+
   render() {
+    const postItems = this.state.posts.map(post => (
+      <div key={post.id}>
+        <h3>{post.title}</h3>
+        <p>{post.body}</p>
+      </div>
+
+    ))
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <PostForm/>
+        <h1><Posts/></h1>
+        {postItems}
       </div>
     );
   }
